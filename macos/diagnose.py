@@ -1,7 +1,6 @@
 """Read-only Mac USB diagnosis. Does not claim USB, mount cards, install or change settings."""
 import json
 import platform
-import plistlib
 import shutil
 import subprocess
 import sys
@@ -19,6 +18,10 @@ def walk(nodes):
 def diagnose():
     if sys.platform != 'darwin':
         raise RuntimeError('Run this diagnostic on macOS')
+    try:
+        import plistlib
+    except ImportError as exc:
+        raise RuntimeError('This Python installation cannot load its plist/Expat library. Try /usr/bin/python3 if available, or another working Python 3. No system changes were made.') from exc
     output = subprocess.check_output(['/usr/sbin/ioreg', '-p', 'IOUSB', '-l', '-a'], timeout=20)
     nodes = [n for n in walk(plistlib.loads(output)) if n.get('idVendor') == 0x054c and n.get('idProduct') == 0x002d]
     disks = plistlib.loads(subprocess.check_output(['/usr/sbin/diskutil', 'list', '-plist', 'external', 'physical'], timeout=20))

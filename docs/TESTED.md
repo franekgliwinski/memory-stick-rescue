@@ -13,6 +13,8 @@ This is a sanitized record, not a claim that every computer is supported.
 | Public Windows setup without mutation switches | Existing WSL/Python/modules/usbipd prerequisites inspected. |
 | Public portable installer/binding on a fresh computer | Not tested. Existing working PC setup deliberately retained. |
 | Public macOS card importer | Not certified in this initial release. USB visibility is confirmed; see macos.md. |
+| Public macOS diagnostic, Apple Silicon/macOS26.2, system Python | One matching Sony USB reader, no external physical card disk. No settings or USB ownership changes. |
+| Separate native Mac PyUSB/libusb capture | Interface claim failed; native driver restored. Zero card commands/files. This does not establish card readability. |
 
 Regression coverage includes wrong IDs/capacities, duplicate readers, mounted-device aliases, refusal to overwrite an existing destination, mismatched copy sizes, bad destination hashes, corrupted/truncated/missing files, incomplete imports, failed cleanup, manifest count/total mismatches, duplicate paths, traversal, extra files, symlinks, optional raw-image integrity and empty cards.
 

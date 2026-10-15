@@ -1,6 +1,8 @@
 # macOS — initial diagnostic and experimental route
 
-Status dated **2026-10-15**: the Sony `054c:002d` is visible as `MSAC-US1` on an Apple Silicon Mac running macOS26.2, but no card disk is exposed by the native OS. **No working Mac importer is certified in this initial source release.** A separate physical-device investigation is ongoing; Windows drivers cannot be installed as macOS drivers.
+Status dated **2026-10-15**: the Sony `054c:002d` is visible as `MSAC-US1` on an Apple Silicon Mac running macOS26.2, but no card disk is exposed by the native OS. **No working Mac importer is certified in this source release.** Windows drivers cannot be installed as macOS drivers.
+
+A separate native-userspace investigation with PyUSB1.3.1/libusb-package1.0.30.0 failed to claim the USB interface even after one controlled, owner-approved temporary capture. The native driver was reattached; zero card commands were sent and zero files were copied. This is a failed access test, not a recovery. Do not repeat elevated capture or expand permissions based on the original one-shot approval. A Linux/UTM experiment would be a separate test and is not currently proven.
 
 ## Safe first check
 
@@ -11,6 +13,8 @@ python3 macos/diagnose.py
 ```
 
 This prints only the matching USB count, OS/architecture, available space and external disk identifiers/sizes. It does not claim USB, read sectors, mount a disk, install software or change security. The external disk list is contextual; it does not assert that any listed disk is the Sony. Keep diagnostic output private if it reveals your configuration.
+
+The published diagnostic was successfully run with `/usr/bin/python3` on the test Mac: one matching reader, no external physical disk. A separate Homebrew Python installation on that machine had an unrelated Expat loading error. If your `python3` reports that error, try `/usr/bin/python3 macos/diagnose.py` if available or use a healthy Python3 installation; do not replace system libraries to run this tool.
 
 ## Candidate Linux route, not a tested recipe
 
